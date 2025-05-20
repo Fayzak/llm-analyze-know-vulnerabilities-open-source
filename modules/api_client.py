@@ -242,14 +242,14 @@ def get_github_patch_info(cve_id: str) -> list | None:
         search_url = "https://api.github.com/search/commits"
         headers = {"Accept": "application/vnd.github.cloak-preview+json"}
         params = {"q": cve_id}
-        
+
         response = requests.get(search_url, headers=headers, params=params, timeout=15)
         response.raise_for_status()
-        
+
         data = response.json()
         if not data.get("items"):
             return None
-        
+
         patches = []
         for item in data["items"][:5]:  # limit to 5 results
             patches.append({
@@ -257,12 +257,29 @@ def get_github_patch_info(cve_id: str) -> list | None:
                 "commit_url": item["html_url"],
                 "commit_message": item["commit"]["message"]
             })
-            
+
         return patches
-            
+
     except requests.exceptions.RequestException as e:
         print(f"GitHub API request failed: {str(e)}")
     except Exception as e:
         print(f"Error retrieving GitHub patch info: {str(e)}")
-        
+
     return None
+
+
+# Добавил метод для получения данных от RedHat/SuSE:
+
+def get_redhat_cvss(cve_id: str) -> dict:
+    """Получает CVSS от RedHat"""
+    try:
+        response = requests.get(
+            f"https://access.redhat.com/hydra/rest/securitydata/cve/{cve_id}.json"
+        )
+        return {
+            "cvss": response.json().get("cvss3", {}).get("cvss3_base_score"),
+            "vector": response.json().get("cvss3", {}).get("cvss3_scoring_vector"),
+        }
+    except Exception as e:
+        print(f"RedHat Error: {str(e)}")
+        return {}
