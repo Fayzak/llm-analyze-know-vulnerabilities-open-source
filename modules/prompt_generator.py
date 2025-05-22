@@ -84,7 +84,7 @@ def create_prompt(
     kev_status: bool = False,
     nvd_details: Optional[Dict] = None,
     github_details: Optional[List[Dict]] = None,
-    attempt: int = 3,
+    attempt: int = 1,
 ) -> Optional[str]:
     try:
         nvd_details = nvd_details or {}
