@@ -9,6 +9,8 @@ from modules.api_client import (
     get_CVE_details,
     get_github_patch_info,
 )
+from modules.llm_handler import get_llm_response
+from modules.validator import validate_response
 
 
 def main(cve_id: str):
@@ -23,7 +25,23 @@ def main(cve_id: str):
 
     # Генерация промпта
     prompt = create_prompt(**data)
-    print(prompt)
+    if not prompt:
+        print("Ошибка генерации промпта!")
+        return
+
+    # Запрос к LLM
+    llm_response = get_llm_response(prompt)
+    if not llm_response:
+        print("LLM не вернула ответ")
+        return
+
+    # Валидация и вывод
+    if validate_response(llm_response):
+        print("Вердикт LLM:")
+        print(llm_response)
+    else:
+        print("Некорректный ответ LLM. Пример ожидаемого формата:")
+        print('{"CVE": "CVE-2024-XXXX", "Решение": "...", "Обоснование": "..."}')
 
 
 if __name__ == "__main__":
