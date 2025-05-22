@@ -2,6 +2,7 @@
 The main script for CVE processing.
 """
 import argparse
+import time
 from modules.prompt_generator import create_prompt
 from modules.api_client import (
     check_CVE_in_KEV,
@@ -30,7 +31,9 @@ def main(cve_id: str):
         return
 
     # Запрос к LLM
+    now = time.time()
     llm_response = get_llm_response(prompt)
+    print(f"Время выполнения запроса: {time.time() - now}")
     if not llm_response:
         print("LLM не вернула ответ")
         return
