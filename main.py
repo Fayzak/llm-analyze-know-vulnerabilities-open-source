@@ -1,7 +1,7 @@
 """
 The main script for CVE processing.
 """
-
+import argparse
 from modules.prompt_generator import create_prompt
 from modules.api_client import (
     check_CVE_in_KEV,
@@ -45,8 +45,6 @@ def main(cve_id: str):
 
 
 if __name__ == "__main__":
-    import argparse
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--cve", required=True)
     args = parser.parse_args()
