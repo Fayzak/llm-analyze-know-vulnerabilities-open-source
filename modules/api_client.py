@@ -131,11 +131,17 @@ def get_CVE_details(cve_id: str) -> dict | None:
             "last_modified": nvd_cve.lastModified,
             "cvss_v3": {
                 "base_score": nvd_cve.v31score or nvd_cve.v30score,
-                "severity": nvd_cve.v31severity or nvd_cve.v30severity
+                "severity": nvd_cve.v31severity or nvd_cve.v30severity,
+                "vector": nvd_cve.v31vector or nvd_cve.v30vector,
+                "impact": nvd_cve.v31impactScore or nvd_cve.v30impactScore,
+                "exploitability": nvd_cve.v31exploitability or nvd_cve.v31exploitability
             } if hasattr(nvd_cve, 'v31score') or hasattr(nvd_cve, 'v30score') else None,
             "cvss_v2": {
                 "base_score": nvd_cve.v2score,
-                "severity": nvd_cve.v2severity
+                "severity": nvd_cve.v2severity,
+                "vector": nvd_cve.v2vector,
+                "impact": nvd_cve.v2impactScore,
+                "exploitability": nvd_cve.v2exploitability
             } if hasattr(nvd_cve, 'v2score') and nvd_cve.v2score else None,
         }
         

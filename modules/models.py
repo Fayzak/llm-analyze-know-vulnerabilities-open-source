@@ -13,3 +13,13 @@ class EPSSResponse(BaseModel):
     data: list[EPSSRecord]
     message: str | None = None
     total: int | None = None
+
+
+class PromptDataModel(BaseModel):
+    cve_id: str
+    kev_status: bool
+    epss: float | None = None
+    base_score: float
+    severity: str
+    nvd_details: dict | None = None
+    github_details: list[dict] | None = None
