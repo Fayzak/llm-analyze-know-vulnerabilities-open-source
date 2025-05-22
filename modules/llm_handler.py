@@ -25,7 +25,7 @@ def get_llm_response(prompt: str, model: str = "mistral:7b") -> str:
         response = requests.post(
             "http://localhost:11434/api/generate",
             json=payload,  # Исправлено с json_format_prompt → json
-            timeout=30,
+            # timeout=30,
         )
 
         response.raise_for_status()

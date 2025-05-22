@@ -3,7 +3,7 @@ The main script for CVE processing.
 """
 import argparse
 import time
-from modules.prompt_generator import create_prompt
+from modules.prompt_generator import create_prompt, create_retry_prompt
 from modules.api_client import (
     check_CVE_in_KEV,
     get_CVE_EPSS_score,
@@ -23,7 +23,6 @@ def main(cve_id: str):
         "nvd_details": get_CVE_details(cve_id),
         "github_details": get_github_patch_info(cve_id),
     }
-
     # Генерация промпта
     prompt = create_prompt(**data)
     if not prompt:
@@ -43,8 +42,17 @@ def main(cve_id: str):
         print("Вердикт LLM:")
         print(llm_response)
     else:
-        print("Некорректный ответ LLM. Пример ожидаемого формата:")
-        print('{"CVE": "CVE-2024-XXXX", "Решение": "...", "Обоснование": "..."}')
+        print("Попытка уточнения запроса к LLM")
+        prompt = create_retry_prompt()
+        now = time.time()
+        llm_response = get_llm_response(prompt)
+        print(f"Время выполнения запроса: {time.time() - now}")
+        if validate_response(llm_response):
+            print("Вердикт LLM:")
+            print(llm_response)
+        else:
+            print("LLM вернул некорректный ответ")
+            print(f"Ответ LLM {llm_response}")
 
 
 if __name__ == "__main__":
