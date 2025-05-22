@@ -68,7 +68,7 @@ ollama serve
 ### 2. Запустите скрипт анализа
 
 ```bash
-python main.py --cve [-CVE-id]
+python main.py --cve [CVE-id]
 ```
 
 ---
