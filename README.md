@@ -44,10 +44,8 @@ pip install -r requirements.txt
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-**Windows (PowerShell):**
-```powershell
-irm https://ollama.com/install.ps1 | iex
-```
+**Windows:**
+[инструкция по установке](https://ollama.com/download/windows)
 
 ### 4. Загрузка модели Mistral-7B
 
