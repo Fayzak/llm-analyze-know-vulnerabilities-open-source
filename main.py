@@ -40,11 +40,11 @@ def main(cve_id: str, model: str = "mistral:7b"):
 
     # Запрос к LLM
     now = time.time()
-    llm_response = get_llm_response_with_mistake_check(prompt, model)
+    llm_response = get_response_with_mistake_check(prompt, model)
     if not llm_response:
         logger.error("Ошибка получения ответа от LLM!")
         return
-    
+
     print("Ответ: ")
     print(llm_response)
 
