@@ -52,8 +52,6 @@ curl -fsSL https://ollama.com/install.sh | sh
 ```bash
 ollama pull mistral:7b
 ```
-=======
->>>>>>> feature/indicators
 
 ---
 
