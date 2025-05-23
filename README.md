@@ -9,6 +9,7 @@
 - [⚙️ Требования](#-требования)
 - [🚀 Запуск](#-запуск)
 - [🌟 Примеры](#-примеры)
+- [🛠️ Установка](#-Установка)
 - [🏗️ Архитектура](#-архитектура)
 - [📞 Контакты](#-контакты)
 
@@ -17,12 +18,11 @@
 ## ⚙️ Требования
 - Python 3.10+
 - 8 ГБ+ оперативной памяти (для работы Mistral-7B)
-<<<<<<< HEAD
 - Утилита `ollama` ([инструкция по установке](https://ollama.com/download/windows))
 
 ---
 
-## 🛠️ Установка
+## 🛠️ Установка 
 
 ### 1. Клонирование репозитория
 
@@ -36,23 +36,6 @@ cd llm-analyze-know-vulnerabilities-open-source
 ```bash
 pip install -r requirements.txt
 ```
-
-### 3. Установка Ollama
-
-**Linux/macOS:**
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-**Windows:**
-[инструкция по установке](https://ollama.com/download/windows)
-
-### 4. Загрузка модели Mistral-7B
-
-```bash
-ollama pull mistral:7b
-```
-
 ---
 
 ## 🚀 Запуск
