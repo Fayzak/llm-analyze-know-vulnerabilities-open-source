@@ -4,14 +4,15 @@ The module for interaction with LLM.
 
 import requests
 import logging
+import json
 
 logging.basicConfig(level=logging.INFO)
-
+logger = logging.getLogger(__name__)
 
 def get_llm_response(prompt: str, model: str = "mistral:7b") -> str:
     """
-    Sends a prompt to the local LLM via Ollama API.
-    Returns the generated response.
+    Отправляет промпт в локальный LLM через Ollama API.
+    Возвращает сгенерированный ответ.
     """
     try:
         # Формируем запрос с явным требованием JSON
@@ -24,18 +25,21 @@ def get_llm_response(prompt: str, model: str = "mistral:7b") -> str:
 
         response = requests.post(
                 "http://localhost:11434/api/generate",
-            json=payload,  # Исправлено с json_format_prompt → json
+            json=payload,
             timeout=300,
         )
 
         response.raise_for_status()
-        # logging.info(f"Сырой ответ: {response.text}")  # Для отладки
+        logger.debug(f"Сырой ответ: {response.text}")
 
         return response.json()["response"]
 
     except requests.exceptions.RequestException as e:
-        logging.error(f"Ollama request error: {str(e)}")
+        logging.error(f"Oшибка запроса к Ollama: {str(e)}")
+        return ""
+    except json.JSONDecodeError as e:
+        logger.error(f"Ошибка декодирования JSON: {str(e)}")
         return ""
     except Exception as e:
-        logging.error(f"Unexpected LLM response error: {str(e)}")
+        logger.error(f"Неожиданная ошибка: {str(e)}")
         return ""

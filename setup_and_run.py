@@ -68,7 +68,7 @@ def start_ollama_server():
             )
     
     logger.info("Waiting for Ollama server to start...")
-    max_retries = 30  # Maximum number of retries (30 × 2 seconds = 60 seconds max wait time)
+    max_retries = 30  # Макс количество ретраев (30 × 2 сек = 60 сек)
     retries = 0
     
     while retries < max_retries:
